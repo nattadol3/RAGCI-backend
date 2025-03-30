@@ -3,6 +3,7 @@ from fastapi import FastAPI, Query, Response
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
+import uvicorn
 
 import query_data as qd
 
@@ -52,5 +53,8 @@ def get_image(query: str = Query(...)):  # ใช้ Query จาก fastapi
 
 # Run the API
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Get the port from environment variable or default to 8000
+    port = int(os.environ.get("PORT", 8000))
+    
+    # Run the app with the specified host and port
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
